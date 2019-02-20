@@ -14,4 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void GetHost(View view) {
     }
+
+    public void JoinGroup(View view) {
+    }
 }
