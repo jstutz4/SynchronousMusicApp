@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void run() {
-        // This is a comment
+        // This is not a comment
     }
 
     public void GetHost(View view) {
