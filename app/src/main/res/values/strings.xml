@@ -5,4 +5,10 @@
     <string name="AddMusic">Add Music</string>
     <string name="groupId">Enter In Your Group ID</string>
     <string name="join">Join</string>
+    <string name="Addstream">Add Music Stream</string>
+    <string name="playmusic">Play/Pause</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="skip">Skip</string>
+    <string name="Previous">Previous</string>
 </resources>
