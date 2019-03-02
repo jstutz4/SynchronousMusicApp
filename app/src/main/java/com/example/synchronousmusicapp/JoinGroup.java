@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class JoinGroup extends AppCompatActivity {
+    public String testID = "testID101";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,5 +17,9 @@ public class JoinGroup extends AppCompatActivity {
     public void playMusic(View view) {
         Intent playMusic = new Intent(this,PlayMusic.class);
         startActivity(playMusic);
+    }
+
+    public Boolean checkGroupId(String id){
+      return id.equals(testID);
     }
 }

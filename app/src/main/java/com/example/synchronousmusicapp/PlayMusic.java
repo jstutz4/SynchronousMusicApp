@@ -10,4 +10,8 @@ public class PlayMusic extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
     }
+
+    public Boolean musicState(){
+        return false;
+    }
 }

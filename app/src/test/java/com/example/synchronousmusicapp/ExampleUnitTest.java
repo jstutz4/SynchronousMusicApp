@@ -14,4 +14,22 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
+
+    @Test
+    public void checkGroupId(){
+        JoinGroup groupId = new JoinGroup();
+        assertEquals(true, groupId.checkGroupId("testID101"));
+    }
+
+    @Test
+    public void isPlayingMusic(){
+        PlayMusic state = new PlayMusic();
+        assertEquals(false, state.musicState());
+    }
+
+    @Test
+    public void linkState(){
+        assertEquals(false,true);
+    }
 }
