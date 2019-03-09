@@ -13,6 +13,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //type your code
+    }
+
     public void GetHost(View view) {
         Intent hosting = new Intent(this,Hosting.class);
         startActivity(hosting);
