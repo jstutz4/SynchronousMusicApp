@@ -78,7 +78,7 @@ public class JoinGroup extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        if (this != null) {
+        if (discoveryListener != null) {
             this.tearDown();
         }
         super.onPause();
@@ -87,7 +87,7 @@ public class JoinGroup extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (this != null) {
+        if (discoveryListener != null) {
             this.discoverServices("_http._tcp",NsdManager.PROTOCOL_DNS_SD,discoveryListener);
         }
     }
@@ -240,8 +240,8 @@ public class JoinGroup extends AppCompatActivity {
             try {
                 stopServiceDiscovery(discoveryListener);
             } finally {
+                discoveryListener = null;
             }
-            discoveryListener = null;
         }
     }
 
