@@ -20,6 +20,11 @@ public class Hosting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hosting);
+        try {
+            registerService(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void registerService(Context context) throws IOException {
 
@@ -35,7 +40,7 @@ public class Hosting extends AppCompatActivity {
         serviceInfo.setPort(port);
 
         nsdManager = (NsdManager)context.getSystemService(Context.NSD_SERVICE);
-
+        initializeRegistrationListener();
         nsdManager.registerService(
                 serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
 
