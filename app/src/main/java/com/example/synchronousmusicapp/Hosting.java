@@ -5,6 +5,7 @@ import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,7 +14,6 @@ public class Hosting extends AppCompatActivity {
 
         private NsdManager.RegistrationListener registrationListener;
         private NsdManager nsdManager;
-        private Context context;
         private String serviceName;
         private int LocalPort;
     @Override
@@ -65,6 +65,7 @@ public class Hosting extends AppCompatActivity {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
+                Log.d("SynchMusic", "Service registed good");
             }
 
             @Override

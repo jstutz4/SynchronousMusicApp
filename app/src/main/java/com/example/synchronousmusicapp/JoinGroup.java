@@ -69,8 +69,8 @@ public class JoinGroup extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        initializeDiscoveryListener();
-        initializeResolveListener();
+//        initializeDiscoveryListener();
+//        initializeResolveListener();
         discoverServices("_http._tcp",NsdManager.PROTOCOL_DNS_SD,discoveryListener);
         //manager2.resolveService(serviceInfo,resolveListener);
 
