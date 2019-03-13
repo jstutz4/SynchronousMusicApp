@@ -66,23 +66,26 @@ public class Hosting extends AppCompatActivity {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
-                Log.d("TAG", "Service register good");
+                Log.d("TAG", "register listener initialized");
             }
 
             @Override
             public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
                 // Registration failed! Put debugging code here to determine why.
+                Log.d("TAG", "Service register failed");
             }
 
             @Override
             public void onServiceUnregistered(NsdServiceInfo arg0) {
                 // Service has been unregistered. This only happens when you call
                 // NsdManager.unregisterService() and pass in this listener.
+                Log.d("TAG", "Service Unregister");
             }
 
             @Override
             public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
                 // Unregistration failed. Put debugging code here to determine why.
+                Log.d("TAG", "Service Unregister failed");
             }
         };
     }
