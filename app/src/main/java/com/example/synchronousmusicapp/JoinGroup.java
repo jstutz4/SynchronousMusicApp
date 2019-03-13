@@ -153,6 +153,7 @@ public class JoinGroup extends AppCompatActivity {
              @Override
              public void onServiceFound(NsdServiceInfo serviceInfo) {
                  Toast.makeText(a, " Synch Music service found", Toast.LENGTH_LONG).show();
+                 Log.i(TAG, "on service found");
 
                  if(!serviceInfo.getServiceType().equals("_http._tcp")){
                      Log.d(TAG, "Unknow Servic Type " + serviceInfo.getServiceType());
@@ -162,6 +163,7 @@ public class JoinGroup extends AppCompatActivity {
                  }
                  else if(serviceInfo.getServiceName().contains("SynchMusic")){
                      manager2.resolveService(serviceInfo,resolveListener);
+                     Log.d(TAG, "all is well");
                  }
 
              }
@@ -229,7 +231,7 @@ public class JoinGroup extends AppCompatActivity {
 //    }
 
     public void discoverServices(String serviceType, int protocol, NsdManager.DiscoveryListener listener){
-            stopDiscovery();
+           // stopDiscovery();
             initializeDiscoveryListener();
             discoverServices("_http._tcp",NsdManager.PROTOCOL_DNS_SD,discoveryListener);
     }
@@ -247,6 +249,7 @@ public class JoinGroup extends AppCompatActivity {
 
     public void stopServiceDiscovery(NsdManager.DiscoveryListener listener){
             Log.e(TAG,"Impliment this function i guess");
+            listener.onDiscoveryStopped("_http._tcp");
     }
 
 //    public void discoverPeers(){
