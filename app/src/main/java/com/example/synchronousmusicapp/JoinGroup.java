@@ -31,7 +31,7 @@ public class JoinGroup extends AppCompatActivity {
 
 
     //nsd manager
-    final static String TAG = "SynchMusic";
+    final static String TAG = "SynchMusic Join";
     private NsdManager manager2;
     private NsdManager.DiscoveryListener discoveryListener;
     private NsdManager.ResolveListener resolveListener;

@@ -16,6 +16,7 @@ public class Hosting extends AppCompatActivity {
         private NsdManager nsdManager;
         private String serviceName;
         private int LocalPort;
+    final static String TAG = "SynchMusic Host";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class Hosting extends AppCompatActivity {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
-                Log.d("SynchMusic", "Service registed good");
+                Log.d("TAG", "Service register good");
             }
 
             @Override
