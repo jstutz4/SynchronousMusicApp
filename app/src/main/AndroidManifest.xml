@@ -33,6 +33,13 @@
                 <data android:scheme="http" android:host="www.sychronousmusicapp.com" android:pathPrefix="/@string/title_SychronousMusic"/>
             </intent-filter>
         </activity>
+        <service android:name=".YesMediaBrowser">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService"/>
+            </intent-filter>
+        </service>
+        <meta-data android:name="com.google.android.gms.car.application"
+            android:resource="@xml/auto_desc" />
     </application>
 
 
