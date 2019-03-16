@@ -25,6 +25,7 @@ public class Hosting extends AppCompatActivity {
 
         try {
             registerService(this);
+            Log.i(TAG, "register service try catch pass");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,7 +43,7 @@ public class Hosting extends AppCompatActivity {
         serviceInfo.setServiceType("_http._tcp");
         serviceInfo.setPort(port);
 
-        nsdManager = (NsdManager)context.getSystemService(Context.NSD_SERVICE);
+        nsdManager = (NsdManager)context.getSystemService(context.NSD_SERVICE);
         initializeRegistrationListener();
         nsdManager.registerService(
                 serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
