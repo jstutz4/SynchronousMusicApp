@@ -26,15 +26,14 @@ public class JoinGroup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_group);
-
-        serviceDiscovery = new ServiceDiscovery(this);
-        serviceDiscovery.initializeNsd();
-        serviceDiscovery.discoverServices();
     }
 
     @Override
     protected void onStart() {
         Log.i(TAG, "Started onStart");
+        serviceDiscovery = new ServiceDiscovery(this);
+        serviceDiscovery.initializeNsd();
+        serviceDiscovery.discoverServices();
         super.onStart();
     }
 
@@ -61,4 +60,7 @@ public class JoinGroup extends AppCompatActivity {
         serviceDiscovery = null;
     }
 
+    public void playMusic(View view) {
+
+    }
 }

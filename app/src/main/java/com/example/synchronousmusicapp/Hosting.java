@@ -6,11 +6,15 @@ import android.net.nsd.NsdServiceInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Hosting extends AppCompatActivity {
+        //music service
+        private YesMediaBrowser musicService;
+        //music service
 
         private NsdManager.RegistrationListener registrationListener;
         private NsdManager nsdManager;
@@ -94,4 +98,9 @@ public class Hosting extends AppCompatActivity {
         };
     }
 
+    public void addMusic(View view) {
+        Log.i(TAG, "start music service");
+        musicService = new YesMediaBrowser();
+        Log.i(TAG, "music service good");
+    }
 }
