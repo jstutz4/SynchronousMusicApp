@@ -47,7 +47,7 @@ public class Hosting extends AppCompatActivity {
         serviceInfo.setServiceType("_http._tcp");
         serviceInfo.setPort(port);
 
-        nsdManager = (NsdManager)context.getSystemService(context.NSD_SERVICE);
+        nsdManager = (NsdManager)context.getSystemService(Context.NSD_SERVICE);
         initializeRegistrationListener();
         nsdManager.registerService(
                 serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
