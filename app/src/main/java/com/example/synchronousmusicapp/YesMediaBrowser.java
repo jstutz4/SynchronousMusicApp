@@ -14,6 +14,7 @@ public class YesMediaBrowser extends MediaBrowserService {
 
     private MediaSession mediaSession;
 
+
     @Override
     public void onCreate() {
         super.onCreate();

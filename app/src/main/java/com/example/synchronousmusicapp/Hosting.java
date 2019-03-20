@@ -11,6 +11,11 @@ import android.view.View;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+/**
+ * Creates an object for a user to register a service with
+ * Network Service Discovery so that his clients can find
+ * the host information to connect to the host.
+ */
 public class Hosting extends AppCompatActivity {
         //music service
         private YesMediaBrowser musicService;
@@ -22,6 +27,10 @@ public class Hosting extends AppCompatActivity {
         private int LocalPort;
     final static String TAG = "SynchMusic Host";
     @Override
+    /**
+     * Will create the activity, while creating it will begin
+     * to register the service.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hosting);
@@ -34,6 +43,18 @@ public class Hosting extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Will Register the service using the NSD API.
+     * Will define the service by finding an open port
+     * and using it along with the name of the service
+     * "SynchMusic. It will be run through tcp with HTTP
+     * protocol. After which it will register the service
+     * so that it can be found. Uses the RegistrationListener
+     * object to handle cases.
+     * @param context
+     * @throws IOException
+     */
     public void registerService(Context context) throws IOException {
 
         int port = findOpenSocket();
@@ -55,6 +76,12 @@ public class Hosting extends AppCompatActivity {
 
     }
 
+    /**
+     * When called will find an open socket to avoid any
+     * conflict that might popup from using an occupied port.
+     * @return Open port that was found.
+     * @throws java.io.IOException
+     */
     private int findOpenSocket() throws java.io.IOException {
         // Initialize a server socket on the next available port.
         ServerSocket serverSocket = new ServerSocket(0);
@@ -66,6 +93,18 @@ public class Hosting extends AppCompatActivity {
         return LocalPort;
     }
 
+    /**
+     * This when called will create the registration listener
+     * that will be used to handle cases when the service is registered.
+     * OnServiceRegistered will confirm the success of registration as
+     * well as change the service name if there is any conflict.
+     * OnRegistrationFailed will indicate an error and provide the
+     * error code.
+     * onServiceUnregistered will confirm the success of the service
+     * being unregistered.
+     * onUnregistrationFailed will indicate the error when unregistration
+     * fails
+     */
     public void initializeRegistrationListener() {
         registrationListener = new NsdManager.RegistrationListener() {
             @Override
