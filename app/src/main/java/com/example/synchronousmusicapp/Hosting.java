@@ -1,6 +1,8 @@
 package com.example.synchronousmusicapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +70,7 @@ public class Hosting extends AppCompatActivity {
         serviceInfo.setServiceType("_http._tcp");
         serviceInfo.setPort(port);
 
-        nsdManager = (NsdManager)context.getSystemService(context.NSD_SERVICE);
+        nsdManager = (NsdManager)context.getSystemService(Context.NSD_SERVICE);
         initializeRegistrationListener();
         nsdManager.registerService(
                 serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
@@ -137,8 +139,16 @@ public class Hosting extends AppCompatActivity {
         };
     }
 
+    /**
+     *
+     * @param view default
+     */
     public void addMusic(View view) {
         Log.i(TAG, "start music service");
+        //add music into raw so how
+
+        Intent playmusic = new Intent(this,PlayMusic.class);
+        startActivity(playmusic);
         musicService = new YesMediaBrowser();
         Log.i(TAG, "music service good");
     }

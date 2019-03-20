@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
+/**
+ * Creates a listener and searches for other devices on the network with the same Synchronous music app.
+ */
 public class JoinGroup extends AppCompatActivity {
     private ServiceDiscovery serviceDiscovery;
     public static final String TAG = "SynchMusic join";
@@ -28,6 +31,9 @@ public class JoinGroup extends AppCompatActivity {
         setContentView(R.layout.activity_join_group);
     }
 
+    /**
+     * Initialize the service discovery.
+     */
     @Override
     protected void onStart() {
         Log.i(TAG, "Started onStart");
@@ -37,6 +43,9 @@ public class JoinGroup extends AppCompatActivity {
         super.onStart();
     }
 
+    /**
+     * Stops service discovery
+     */
     @Override
     protected void onPause() {
         Log.i(TAG, "Started onPause");
@@ -52,6 +61,9 @@ public class JoinGroup extends AppCompatActivity {
         super.onResume();
     }
 
+    /**
+     * Stops all service discovery and listeners and sets them to null.
+     */
     @Override
     protected void onDestroy() {
         Log.i(TAG, "Started onDestroy");
