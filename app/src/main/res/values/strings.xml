@@ -12,4 +12,5 @@
     <string name="skip">Skip</string>
     <string name="Previous">Previous</string>
     <string name="title_SychronousMusic">Sychronous Music</string>
+    <string name="plays">play</string>
 </resources>
