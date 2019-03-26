@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 
 /**
@@ -21,6 +22,7 @@ import java.net.ServerSocket;
 public class Hosting extends AppCompatActivity {
         //music service
         private YesMediaBrowser musicService;
+        private TryAudioStream tryAudioStream;
         //music service
 
         private NsdManager.RegistrationListener registrationListener;
@@ -115,7 +117,10 @@ public class Hosting extends AppCompatActivity {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
+                tryAudioStream = new TryAudioStream(LocalPort);
+                tryAudioStream.transmit();
                 Log.i("TAG", "register listener initialized");
+
             }
 
             @Override
