@@ -48,12 +48,9 @@ public class PlayMusic extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
-        runPermission();
-        Log.i(TAG, "we are running play music activity");
+       Thread music = new Thread(new Runable());
+       music.start();
 
-        Log.i(TAG, "mp is fine");
-        mp = MediaPlayer.create(this, R.raw.kalimba);
-        Log.i(TAG, "what happened to the button");
 
     }
 
@@ -119,11 +116,6 @@ public class PlayMusic extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor songCursor = contentResolver.query(songUri, null,"5",null,null);
-
-
-
-        //if(songCursor != null){
-
 
         if (songCursor != null && (songCursor).moveToFirst()) {
             Log.i(TAG, "songCursoer 1\n " + songCursor.moveToFirst());
@@ -239,6 +231,15 @@ public class PlayMusic extends AppCompatActivity {
                     }
                 }
             }
+        }
+    }
+
+    private class Runable implements Runnable {
+
+        @Override
+        public void run() {
+            runPermission();
+            Log.i(TAG, "we are running play music activity");
         }
     }
 }

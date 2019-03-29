@@ -17,7 +17,9 @@ public class TryAudioStream {
     private InetAddress destination;
     private int port;
 
-    public TryAudioStream(InetAddress destination, int port) {
+
+
+    public TryAudioStream(InetAddress destination, int port) throws UnknownHostException {
         try {
             audioGroup = new AudioGroup();
             audioGroup.setMode(AudioGroup.MODE_NORMAL);
