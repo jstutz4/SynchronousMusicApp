@@ -1,6 +1,7 @@
 package com.example.synchronousmusicapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,15 +43,22 @@ public class PlayMusic extends AppCompatActivity {
     private ArrayList<String> songList;
     private ListView listView;
     private ArrayAdapter<String> adapter;
-
+    private Activity activity = this;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
-       Thread music = new Thread(new Runable());
+       Thread music = new Thread(new Runnable() {
+           @Override
+           public void run() {
+               runPermission();
+               Log.i(TAG, "we are running play music activity");
+           }
+       });
        music.start();
+
 
 
     }
@@ -231,15 +240,6 @@ public class PlayMusic extends AppCompatActivity {
                     }
                 }
             }
-        }
-    }
-
-    private class Runable implements Runnable {
-
-        @Override
-        public void run() {
-            runPermission();
-            Log.i(TAG, "we are running play music activity");
         }
     }
 }
