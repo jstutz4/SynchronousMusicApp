@@ -15,17 +15,18 @@ public class TryAudioStream {
     private AudioStream audioStream;
     private AudioGroup audioGroup;
     private InetAddress destination;
+    private String multicastIp;
     private int port;
 
-
-
-    public TryAudioStream(InetAddress destination, int port) throws UnknownHostException {
+    public TryAudioStream(int port) {
         try {
             audioGroup = new AudioGroup();
             audioGroup.setMode(AudioGroup.MODE_NORMAL);
             audioStream = new AudioStream(InetAddress.getLocalHost());
-            this.destination = destination;
             this.port = port;
+            multicastIp = "224.0.0.10";
+            destination = InetAddress.getByName(multicastIp);
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (SocketException e) {
