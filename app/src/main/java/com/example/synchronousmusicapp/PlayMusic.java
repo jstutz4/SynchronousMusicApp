@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -44,7 +45,8 @@ public class PlayMusic extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private Activity activity = this;
-
+    private SharedPreferences pref;
+    private TryAudioStream audio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class PlayMusic extends AppCompatActivity {
            public void run() {
                runPermission();
                Log.i(TAG, "we are running play music activity");
+
+               Log.i(TAG, "Look at Try audio stream");
            }
        });
        music.start();
@@ -205,6 +209,8 @@ public class PlayMusic extends AppCompatActivity {
             mp.reset();
         }
         mp = MediaPlayer.create(this, Uri.parse(idResource));
+
+        audio = new TryAudioStream(pref.getInt("port",80), mp);
 
        //mp.setDataSource(idResource);
        //mp.prepare();
