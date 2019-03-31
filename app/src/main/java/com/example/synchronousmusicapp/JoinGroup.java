@@ -100,7 +100,7 @@ public class JoinGroup extends AppCompatActivity {
 
                     Log.i(TAG, "Client IP " +InetAddress.getLocalHost().toString());
 
-                    InetAddress sendIp = InetAddress.getByName(endDest);
+                   // InetAddress sendIp = InetAddress.getByName(endDest);
                    // InetAddress.g
 
                     Log.i(TAG, "host ip: " +endDest);

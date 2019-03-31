@@ -37,7 +37,7 @@ public class TryAudioStream {
             this.port = port;
             multicastIp = "224.0.0.10";
             String ip = pref.getString("clientIP","unknown");
-            destination = InetAddress.getByName("ip6-localhost/::1");
+            destination = InetAddress.getByName(ip);
             Log.i(TAG, "host ip: " + destination);
 
         } catch (UnknownHostException e) {
