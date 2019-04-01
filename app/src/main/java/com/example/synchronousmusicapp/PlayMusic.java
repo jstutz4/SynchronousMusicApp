@@ -227,7 +227,7 @@ public class PlayMusic extends AppCompatActivity {
                 pref = getSharedPreferences("port",0);
                 int port = pref.getInt("port", 80);
                 pref = getSharedPreferences("clientIP", 0);
-                String client = pref.getString("clientIP", "unknown");
+                String client = pref.getString("clientIP", "127.0.3.1");
 
                 audio = new TryAudioStream(port, client, mp);
             }

@@ -36,7 +36,8 @@ public class TryAudioStream {
             audioStream = new AudioStream(hoster);
             this.port = port;
             multicastIp = "224.0.0.10";
-            destination = InetAddress.getByName(clientIP);
+           // destination = InetAddress.getByName(clientIP);
+            destination = hoster;
             Log.i(TAG, "client ip: " + destination);
 
         } catch (UnknownHostException e) {
@@ -46,14 +47,14 @@ public class TryAudioStream {
         }
     }
 
-    public void receive() {
-        Log.i(TAG, "STArt receiving");
-        audioStream.join(null);
-        audioStream.setCodec(AudioCodec.AMR);
-        audioStream.setMode(RtpStream.MODE_RECEIVE_ONLY);
-        audioStream.associate(destination, port);
-        audioStream.join(audioGroup);
-    }
+//    public void receive() {
+//        Log.i(TAG, "STArt receiving");
+//        audioStream.join(null);
+//        audioStream.setCodec(AudioCodec.AMR);
+//        audioStream.setMode(RtpStream.MODE_RECEIVE_ONLY);
+//        audioStream.associate(destination, port);
+//        audioStream.join(audioGroup);
+//    }
 
     public void transmit() {
         Log.i(TAG, "start transmitting");
