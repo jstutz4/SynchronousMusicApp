@@ -25,10 +25,10 @@ public class TryAudioStream {
     private InetAddress destination;
     private String multicastIp;
     private int port;
-    private SharedPreferences pref;
+   //private SharedPreferences pref;
     private final static String TAG = "Audio stream";
 
-    public TryAudioStream(int port, MediaPlayer stream) {
+    public TryAudioStream(int port,String clientIP, MediaPlayer stream) {
         try {
             InetAddress hoster = InetAddress.getLocalHost();
             audioGroup = new AudioGroup();
@@ -36,9 +36,8 @@ public class TryAudioStream {
             audioStream = new AudioStream(hoster);
             this.port = port;
             multicastIp = "224.0.0.10";
-            String ip = pref.getString("clientIP","unknown");
-            destination = InetAddress.getByName(ip);
-            Log.i(TAG, "host ip: " + destination);
+            destination = InetAddress.getByName(clientIP);
+            Log.i(TAG, "client ip: " + destination);
 
         } catch (UnknownHostException e) {
             e.printStackTrace();

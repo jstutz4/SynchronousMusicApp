@@ -182,24 +182,35 @@ public class PlayMusic extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, songList);
         //if(adapter != null && listView != null) {
             Log.i(TAG, "Adaptor not null adding something to listview");
-            listView.setAdapter(adapter);
-        //}
-        Log.i(TAG, "done adding");
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Context context1 = getApplicationContext();
-                String idResource = songList.get(position);
-              int pos =  idResource.indexOf("/");
 
-                idResource = idResource.substring(pos);
+          runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                  Log.i(TAG, "set Adapter thread working");
+                  listView.setAdapter(adapter);
+                  Log.i(TAG, "done adding");
+                  listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                      @Override
+                      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                          Context context1 = getApplicationContext();
+                          String idResource = songList.get(position);
+                          int pos =  idResource.indexOf("/");
+
+                          idResource = idResource.substring(pos);
 //                try {
-                    playMusic(idResource);
+                          playMusic(idResource);
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-            }
-        });
+                      }
+                  });
+              }
+          });
+        //}
+
+
+
+
       }
 
     private void playMusic(String idResource) {
@@ -210,7 +221,19 @@ public class PlayMusic extends AppCompatActivity {
         }
         mp = MediaPlayer.create(this, Uri.parse(idResource));
 
-        audio = new TryAudioStream(pref.getInt("port",80), mp);
+        Thread stream = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pref = getSharedPreferences("port",0);
+                int port = pref.getInt("port", 80);
+                pref = getSharedPreferences("clientIP", 0);
+                String client = pref.getString("clientIP", "unknown");
+
+                audio = new TryAudioStream(port, client, mp);
+            }
+        });
+        stream.start();
+
 
        //mp.setDataSource(idResource);
        //mp.prepare();
