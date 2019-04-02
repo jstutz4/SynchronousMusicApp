@@ -2,7 +2,6 @@ package com.example.synchronousmusicapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
@@ -22,18 +21,17 @@ import java.net.ServerSocket;
  * the host information to connect to the host.
  */
 public class Hosting extends AppCompatActivity {
-        //music service
-        private YesMediaBrowser musicService;
-        private TryAudioStream tryAudioStream;
-        //music service
+    //music service
+    private YesMediaBrowser musicService;
+    private TryAudioStream tryAudioStream;
+    //music service
 
-        private NsdManager.RegistrationListener registrationListener;
-        private NsdManager nsdManager;
-        private String serviceName;
-        private int LocalPort;
-        private final Context context = this;
-        final static String TAG = "SynchMusic Host";
-
+    private NsdManager.RegistrationListener registrationListener;
+    private NsdManager nsdManager;
+    private String serviceName;
+    private int LocalPort;
+    private final Context context = this;
+    final static String TAG = "SynchMusic Host";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,17 +49,6 @@ public class Hosting extends AppCompatActivity {
             }
         });
 
-    }
-
-    /**
-     * Stops all registered service listeners and sets them to null.
-     */
-    @Override
-    protected void onDestroy() {
-        Log.i(TAG, "Started onDestroy");
-        super.onDestroy();
-        nsdManager.unregisterService(registrationListener);
-        registrationListener = null;
     }
 
     /**
@@ -87,21 +74,12 @@ public class Hosting extends AppCompatActivity {
         serviceInfo.setServiceName("SynchMusic");
         serviceInfo.setServiceType("_http._tcp");
         serviceInfo.setPort(port);
-        InetAddress ip = InetAddress.getLocalHost();
-        InetAddress hostName = InetAddress.getByName(null);
-        serviceInfo.setHost(ip);
+
         nsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
         initializeRegistrationListener();
         nsdManager.registerService(
                 serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
-
-        Log.i(TAG, "We made it to the end of register service :" + serviceInfo.getHost() + "stop: " + serviceInfo.getPort());
-        Log.i(TAG, "HOST NAME " + hostName );
-        SharedPreferences pref = getSharedPreferences("port", 0);
-
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("port", serviceInfo.getPort());
-        editor.apply();
+        Log.i(TAG, "We made it to the end of register service");
 
     }
 
@@ -118,7 +96,7 @@ public class Hosting extends AppCompatActivity {
         // Store the chosen port.
         LocalPort =  serverSocket.getLocalPort();
         serverSocket.close();
-Log.i(TAG, "LOCAL PORT IS " + LocalPort);
+
         return LocalPort;
     }
 
@@ -142,12 +120,9 @@ Log.i(TAG, "LOCAL PORT IS " + LocalPort);
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
-                NsdServiceInfo.getPort();
-                NsdServiceInfo.getHost();
                 //tryAudioStream = new TryAudioStream(LocalPort);
                 //tryAudioStream.transmit();
-
-                Log.i(TAG, "register listener initialized " +NsdServiceInfo.getPort() +"host: " +NsdServiceInfo.getHost());
+                Log.i(TAG, "register listener initialized");
 
             }
 

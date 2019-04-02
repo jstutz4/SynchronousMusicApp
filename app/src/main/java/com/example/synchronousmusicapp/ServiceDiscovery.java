@@ -5,27 +5,30 @@ import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 
- class ServiceDiscovery {
+class ServiceDiscovery {
     private Context context;
     private NsdManager nsdManager;
     private NsdManager.ResolveListener resolveListener;
     private NsdManager.DiscoveryListener discoveryListener;
+
+
+
     private NsdServiceInfo NsdServiceInfo;
     private static final String TAG = "Synch Music SD";
     private static final String SERVICE_NAME = "SynchMusic";
     private static final String SERVICE_Type = "_http._tcp.";
     private static final String SERVICE_Type_DOT = "_http._tcp" + ".";
 
-     ServiceDiscovery(Context context){
+    ServiceDiscovery(Context context){
         this.context = context;
         nsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
     }
 
-     void initializeNsd(){
+    void initializeNsd(){
         initializeResolveListener();
     }
 
-     private void initializeDiscoveryListener(){
+    public void initializeDiscoveryListener(){
         discoveryListener = new NsdManager.DiscoveryListener() {
             @Override
             public void onStartDiscoveryFailed(String serviceType, int errorCode) {
@@ -63,7 +66,7 @@ import android.util.Log;
                 else if(serviceInfo.getServiceName().contains(SERVICE_NAME)){
                     Log.d(TAG, "different devices (" +serviceInfo.getServiceName() + "-" + SERVICE_NAME + ")");
                     stopDiscovery();
-                    nsdManager.resolveService(serviceInfo,resolveListener);
+                    nsdManager.resolveService(serviceInfo,initializeResolveListener());
                     Log.d(TAG, "resolve function called");
                 }
             }
@@ -78,7 +81,7 @@ import android.util.Log;
         };
     }
 
-     private void initializeResolveListener(){
+    private NsdManager.ResolveListener initializeResolveListener(){
         resolveListener = new NsdManager.ResolveListener() {
             @Override
             public void onResolveFailed(android.net.nsd.NsdServiceInfo serviceInfo, int errorCode) {
@@ -87,25 +90,33 @@ import android.util.Log;
 
             @Override
             public void onServiceResolved(android.net.nsd.NsdServiceInfo serviceInfo) {
-                Log.i(TAG, "Resolve Succeeded. " + serviceInfo);
+                Log.i(TAG, "Resolve Succeeded in SD line 90. " + serviceInfo);
                 if(serviceInfo.getServiceName().equals(SERVICE_NAME)){
                     Log.d(TAG, "Same IP");
                 }
                 NsdServiceInfo = serviceInfo;
             }
         };
+
+        return resolveListener;
     }
 
-     void discoverServices(){
+    void discoverServices(){
         stopDiscovery();
+        initializeNsd();
         initializeDiscoveryListener();
         nsdManager.discoverServices(SERVICE_Type, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+
     }
 
-     void stopDiscovery(){
+    void stopDiscovery(){
         if(discoveryListener != null){
             nsdManager.stopServiceDiscovery(discoveryListener);
         }
         discoveryListener = null;
+    }
+
+    public android.net.nsd.NsdServiceInfo getNsdServiceInfo() {
+        return NsdServiceInfo;
     }
 }

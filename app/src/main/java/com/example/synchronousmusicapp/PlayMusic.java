@@ -221,19 +221,6 @@ public class PlayMusic extends AppCompatActivity {
         }
         mp = MediaPlayer.create(this, Uri.parse(idResource));
 
-        Thread stream = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                pref = getSharedPreferences("port",0);
-                int port = pref.getInt("port", 80);
-                pref = getSharedPreferences("clientIP", 0);
-                String client = pref.getString("clientIP", "127.0.3.1");
-
-                audio = new TryAudioStream(port, client, mp);
-            }
-        });
-        stream.start();
-
 
        //mp.setDataSource(idResource);
        //mp.prepare();
