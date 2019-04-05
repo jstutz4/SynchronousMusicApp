@@ -47,14 +47,19 @@ public class TryAudioStream {
         }
     }
 
-//    public void receive() {
-//        Log.i(TAG, "STArt receiving");
-//        audioStream.join(null);
-//        audioStream.setCodec(AudioCodec.AMR);
-//        audioStream.setMode(RtpStream.MODE_RECEIVE_ONLY);
-//        audioStream.associate(destination, port);
-//        audioStream.join(audioGroup);
-//    }
+    public TryAudioStream(int port,InetAddress hostIP){
+        this.port = port;
+        this.destination = hostIP;
+    }
+
+    public void receive() {
+        Log.i(TAG, "STArt receiving");
+        audioStream.join(null);
+        audioStream.setCodec(AudioCodec.AMR);
+        audioStream.setMode(RtpStream.MODE_RECEIVE_ONLY);
+        audioStream.associate(destination, port);
+        audioStream.join(audioGroup);
+    }
 
     public void transmit() {
         Log.i(TAG, "start transmitting");

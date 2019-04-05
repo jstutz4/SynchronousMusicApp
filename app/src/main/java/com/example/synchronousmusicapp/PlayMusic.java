@@ -214,6 +214,7 @@ public class PlayMusic extends AppCompatActivity {
       }
 
     private void playMusic(String idResource) {
+
         Log.d(TAG, "media player locating song");
         if(mp.isPlaying()){
             mp.stop();

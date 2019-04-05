@@ -1,9 +1,17 @@
 package com.example.synchronousmusicapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 class ServiceDiscovery {
     private Context context;
@@ -16,8 +24,8 @@ class ServiceDiscovery {
     private NsdServiceInfo NsdServiceInfo;
     private static final String TAG = "Synch Music SD";
     private static final String SERVICE_NAME = "SynchMusic";
-    private static final String SERVICE_Type = "_http._tcp.";
-    private static final String SERVICE_Type_DOT = "_http._tcp" + ".";
+    private static final String SERVICE_Type = "_localdash._tcp";
+    private static final String SERVICE_Type_DOT = "_localdash._tcp" + ".";
 
     ServiceDiscovery(Context context){
         this.context = context;
@@ -25,7 +33,7 @@ class ServiceDiscovery {
     }
 
     void initializeNsd(){
-        initializeResolveListener();
+       this.resolveListener = initializeResolveListener();
     }
 
     public void initializeDiscoveryListener(){
@@ -68,6 +76,7 @@ class ServiceDiscovery {
                     stopDiscovery();
                     nsdManager.resolveService(serviceInfo,initializeResolveListener());
                     Log.d(TAG, "resolve function called");
+
                 }
             }
 
@@ -80,6 +89,7 @@ class ServiceDiscovery {
             }
         };
     }
+
 
     private NsdManager.ResolveListener initializeResolveListener(){
         resolveListener = new NsdManager.ResolveListener() {
@@ -95,11 +105,46 @@ class ServiceDiscovery {
                     Log.d(TAG, "Same IP");
                 }
                 NsdServiceInfo = serviceInfo;
+                String test = serviceInfo.getHost().getHostAddress();
+                // add sockets idea
+
+                //sockets
+                SocketSend sendHost = new SocketSend();
+
+                String host = serviceInfo.getHost().toString();
+                host = host.substring(1);
+                Log.i(TAG, "trying sockets to send " + host);
+                try {
+                    InetAddress address = InetAddress.getByName(host);
+                    sendHost.sendToHost(address, serviceInfo.getPort());
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                try {
+                    OutputStream outputStream = sendHost.getOutputStream();
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+                    BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+
+                    String clientIp = InetAddress.getLocalHost().toString();
+
+                    String sendMessage = clientIp + "\n";
+                    bufferedWriter.write(sendMessage);
+                    bufferedWriter.flush();
+                    System.out.println("Message sent to the server : "+sendMessage);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
         return resolveListener;
     }
+
+
 
     void discoverServices(){
         stopDiscovery();

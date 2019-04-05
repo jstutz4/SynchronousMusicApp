@@ -72,7 +72,7 @@ public class Hosting extends AppCompatActivity {
         // The name is subject to change based on conflicts
         // with other services advertised on the same network.
         serviceInfo.setServiceName("SynchMusic");
-        serviceInfo.setServiceType("_http._tcp");
+        serviceInfo.setServiceType("_localdash._tcp");
         serviceInfo.setPort(port);
 
         nsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
@@ -120,9 +120,11 @@ public class Hosting extends AppCompatActivity {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
+                NsdServiceInfo.getPort();
+                NsdServiceInfo.getHost();
                 //tryAudioStream = new TryAudioStream(LocalPort);
                 //tryAudioStream.transmit();
-                Log.i(TAG, "register listener initialized");
+                Log.i(TAG, "register listener initialized " + serviceName + " :: " + NsdServiceInfo.getPort() + " :: " + NsdServiceInfo.getHost());
 
             }
 
