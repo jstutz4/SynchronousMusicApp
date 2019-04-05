@@ -1,8 +1,8 @@
 package com.example.synchronousmusicapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.os.AsyncTask;
@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 
 /**
@@ -26,6 +25,7 @@ public class Hosting extends AppCompatActivity {
     private TryAudioStream tryAudioStream;
     //music service
 
+    private Activity activity;
     private NsdManager.RegistrationListener registrationListener;
     private NsdManager nsdManager;
     private String serviceName;
@@ -37,6 +37,7 @@ public class Hosting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hosting);
 
+        activity = this;
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -123,6 +124,7 @@ public class Hosting extends AppCompatActivity {
                 //tryAudioStream = new TryAudioStream(LocalPort);
                 //tryAudioStream.transmit();
                 Log.i(TAG, "register listener initialized");
+                Server server = new Server(activity, LocalPort);
 
             }
 
