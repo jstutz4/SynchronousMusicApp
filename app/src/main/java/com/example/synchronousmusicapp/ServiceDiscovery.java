@@ -24,8 +24,8 @@ class ServiceDiscovery {
     private NsdServiceInfo NsdServiceInfo;
     private static final String TAG = "Synch Music SD";
     private static final String SERVICE_NAME = "SynchMusic";
-    private static final String SERVICE_Type = "_localdash._tcp";
-    private static final String SERVICE_Type_DOT = "_localdash._tcp" + ".";
+    private static final String SERVICE_Type = "_local._tcp";
+    private static final String SERVICE_Type_DOT = "_local._tcp" + ".";
 
     ServiceDiscovery(Context context){
         this.context = context;
@@ -109,35 +109,35 @@ class ServiceDiscovery {
                 // add sockets idea
 
                 //sockets
-                SocketSend sendHost = new SocketSend();
-
-                String host = serviceInfo.getHost().toString();
-                host = host.substring(1);
-                Log.i(TAG, "trying sockets to send " + host);
-                try {
-                    InetAddress address = InetAddress.getByName(host);
-                    sendHost.sendToHost(address, serviceInfo.getPort());
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                try {
-                    OutputStream outputStream = sendHost.getOutputStream();
-                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-                    BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-
-                    String clientIp = InetAddress.getLocalHost().toString();
-
-                    String sendMessage = clientIp + "\n";
-                    bufferedWriter.write(sendMessage);
-                    bufferedWriter.flush();
-                    System.out.println("Message sent to the server : "+sendMessage);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                SocketSend sendHost = new SocketSend();
+//
+//                String host = serviceInfo.getHost().toString();
+//                host = host.substring(1);
+//                Log.i(TAG, "trying sockets to send " + host);
+//                try {
+//                    InetAddress address = InetAddress.getByName(host);
+//                    sendHost.sendToHost(address, serviceInfo.getPort());
+//                } catch (UnknownHostException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//
+//                try {
+//                    OutputStream outputStream = sendHost.getOutputStream();
+//                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+//                    BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+//
+//                    String clientIp = InetAddress.getLocalHost().toString();
+//
+//                    String sendMessage = clientIp + "\n";
+//                    bufferedWriter.write(sendMessage);
+//                    bufferedWriter.flush();
+//                    System.out.println("Message sent to the server : "+sendMessage);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         };
 
