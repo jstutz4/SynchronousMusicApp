@@ -6,8 +6,11 @@ import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
@@ -21,9 +24,6 @@ class ServiceDiscovery {
     private NsdManager nsdManager;
     private NsdManager.ResolveListener resolveListener;
     private NsdManager.DiscoveryListener discoveryListener;
-
-
-
     private NsdServiceInfo NsdServiceInfo;
     private static final String TAG = "Synch Music SD";
     private static final String SERVICE_NAME = "SynchMusic";
@@ -35,7 +35,10 @@ class ServiceDiscovery {
         nsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
     }
 
-    void initializeNsd(){
+    /**
+     * initialize the service resolve listener.
+     */
+    public void initializeNsd(){
        this.resolveListener = initializeResolveListener();
     }
 
@@ -62,6 +65,11 @@ class ServiceDiscovery {
                 Log.i(TAG, "discovery stopped: " + serviceType);
             }
 
+            /**
+             * checks to make sure the service found matches the service name and is not the same
+             * ip device. Calls the resolve listener.
+             * @param serviceInfo host ip, port number, service name
+             */
             @Override
             public void onServiceFound(NsdServiceInfo serviceInfo) {
                 Log.i(TAG, "Service discovery successs " + serviceInfo);
@@ -83,6 +91,10 @@ class ServiceDiscovery {
                 }
             }
 
+            /**
+             *
+             * @param serviceInfo  the host ip, port, and service name will be set to null
+             */
             @Override
             public void onServiceLost(NsdServiceInfo serviceInfo) {
                 Log.d(TAG, "Service lost " + serviceInfo);
@@ -101,6 +113,10 @@ class ServiceDiscovery {
                 Log.e(TAG, "Resolve failed" + errorCode);
             }
 
+            /**
+             *
+             * @param serviceInfo contains the name, host ip, and port of the service connected to.
+             */
             @Override
             public void onServiceResolved(android.net.nsd.NsdServiceInfo serviceInfo) {
                 Log.i(TAG, "Resolve Succeeded in SD line 90. " + serviceInfo);
@@ -108,7 +124,7 @@ class ServiceDiscovery {
                     Log.d(TAG, "Same IP");
                 }
                 NsdServiceInfo = serviceInfo;
-                String test = serviceInfo.getHost().getHostAddress();
+                //String test = serviceInfo.getHost().getHostAddress();
                 // add sockets idea
 
                 //sockets
@@ -136,19 +152,28 @@ class ServiceDiscovery {
                     String sendMessage = clientIp + "\n";
                     bufferedWriter.write(sendMessage);
                     bufferedWriter.flush();
-                    System.out.println("Message sent to the server : "+sendMessage);
+                    System.out.println("Message sent to the server : " + sendMessage);
 
+                    //Get the return message from the server
+                    InputStream is = sendHost.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(is);
+                    BufferedReader br = new BufferedReader(isr);
+                    String message = br.readLine();
+                    System.out.println("Message received from the server : " + message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         };
-
         return resolveListener;
     }
 
 
-
+    /**
+     * Stops any discover actions and then initialized discovery and resolve listeners and begins
+     * searching for the desired service
+     *
+     */
     void discoverServices(){
         stopDiscovery();
         initializeNsd();
@@ -157,6 +182,9 @@ class ServiceDiscovery {
 
     }
 
+    /**
+     * stops searching sets discovery listener to null
+     */
     void stopDiscovery(){
         if(discoveryListener != null){
             nsdManager.stopServiceDiscovery(discoveryListener);
@@ -164,7 +192,4 @@ class ServiceDiscovery {
         discoveryListener = null;
     }
 
-    public android.net.nsd.NsdServiceInfo getNsdServiceInfo() {
-        return NsdServiceInfo;
-    }
 }

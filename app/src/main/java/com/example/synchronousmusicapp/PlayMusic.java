@@ -6,7 +6,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -14,20 +13,16 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AndroidException;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,9 +46,6 @@ public class PlayMusic extends AppCompatActivity {
     private ArrayList<String> songList;
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private Activity activity = this;
-    private SharedPreferences pref;
-    private TryAudioStream audio;
 
 
     @Override
@@ -105,9 +97,9 @@ public class PlayMusic extends AppCompatActivity {
 
     }
 
-    public Boolean musicState(){
-        return false;
-    }
+//    public Boolean musicState(){
+//        return false;
+//    }
 
     /**
      * Toggles play and pause button and calls the appropriate method.
@@ -141,34 +133,35 @@ public class PlayMusic extends AppCompatActivity {
      * Manages the playback of the music and creates a list
      */
     private void getMusic() {
-        Log.i(TAG, "getmusic started");
+
         ContentResolver contentResolver = getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor songCursor = contentResolver.query(songUri, null,"5",null,null);
 
         if (songCursor != null && (songCursor).moveToFirst()) {
-            Log.i(TAG, "songCursoer 1\n " + songCursor.moveToFirst());
 
-            Log.i(TAG, "getmusic started step 1");
+
             int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int songLocation = songCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
             int songLength = songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do {
-                Log.i(TAG, "getmusic started step 2");
+
                 String currentTitle = songCursor.getString(songTitle);
                 String currentLength = songCursor.getString(songLength);
                 String currentLocation = songCursor.getString(songLocation);
                 songList.add(currentTitle + "\n" + currentLength + "\n" + currentLocation);
-                Log.i(TAG, currentTitle + "\n" + currentLength + "\n" + currentLocation);
             } while (songCursor.moveToNext());
         }
         // }
 
         songCursor.close();
-        Log.d(TAG, "getMusic ened");
+
 
     }
 
+    /**
+     * if permission to browser internal storage is not granted then it will ask the user for permission
+     */
     private void runPermission() {
         if(ContextCompat.checkSelfPermission(PlayMusic.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED){
@@ -183,13 +176,14 @@ public class PlayMusic extends AppCompatActivity {
         }
         else{
             Log.d(TAG, "permissions all good");
-            dostuff();
+            gatherMusic();
         }
     }
 
-
-      private void dostuff(){
-          final String[] idResource2 = new String[1];
+    /**
+     * takes the song list and puts a on click listener for each song then adds it to the list view
+     */
+    private void gatherMusic(){
          final Context context = this;
           Log.i(TAG, "context: " + context);
         listView = findViewById(R.id.songList);
@@ -197,7 +191,6 @@ public class PlayMusic extends AppCompatActivity {
         getMusic();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, songList);
         //if(adapter != null && listView != null) {
-            Log.i(TAG, "Adaptor not null adding something to listview");
 
           runOnUiThread(new Runnable() {
               @Override
@@ -208,7 +201,7 @@ public class PlayMusic extends AppCompatActivity {
                   listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                       @Override
                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                          Context context1 = getApplicationContext();
+                        //  Context context1 = getApplicationContext();
                           String idResource = songList.get(position);
                           int pos =  idResource.indexOf("/");
 
@@ -249,7 +242,8 @@ public class PlayMusic extends AppCompatActivity {
       }
 
     /**
-     * Begins music
+     * loads song into the media player
+     * @param idResource   song location to play it
      */
     private void playMusic(String idResource) {
 
@@ -287,7 +281,7 @@ public class PlayMusic extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(PlayMusic.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                         Log.d(TAG,"Permission granted!");
-                        dostuff();
+                        gatherMusic();
                     }
                     else{
                         Log.d(TAG, "NO permission granted");
