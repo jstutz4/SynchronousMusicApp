@@ -1,6 +1,7 @@
 package com.example.synchronousmusicapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
@@ -14,6 +15,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Searches for the services that match our app and saves the host ip and port number in serviceinfo
@@ -165,7 +168,6 @@ class ServiceDiscovery {
                 }
             }
         };
-
         return resolveListener;
     }
 

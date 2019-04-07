@@ -1,10 +1,8 @@
 package com.example.synchronousmusicapp;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -36,9 +34,6 @@ public class PlayMusic extends AppCompatActivity {
     private ArrayList<String> songList;
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private Activity activity = this;
-    private SharedPreferences pref;
-    private TryAudioStream audio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,34 +112,32 @@ public class PlayMusic extends AppCompatActivity {
    // }
 
     /**
-     * retrieves all audio files from the device and puts them in the list view
+     * retrieves all audio files from the device and puts them in a list
      */
     private void getMusic() {
-        Log.i(TAG, "getmusic started");
+
         ContentResolver contentResolver = getContentResolver();
         Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         Cursor songCursor = contentResolver.query(songUri, null,"5",null,null);
 
         if (songCursor != null && (songCursor).moveToFirst()) {
-            Log.i(TAG, "songCursoer 1\n " + songCursor.moveToFirst());
 
-            Log.i(TAG, "getmusic started step 1");
+
             int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int songLocation = songCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
             int songLength = songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do {
-                Log.i(TAG, "getmusic started step 2");
+
                 String currentTitle = songCursor.getString(songTitle);
                 String currentLength = songCursor.getString(songLength);
                 String currentLocation = songCursor.getString(songLocation);
                 songList.add(currentTitle + "\n" + currentLength + "\n" + currentLocation);
-                Log.i(TAG, currentTitle + "\n" + currentLength + "\n" + currentLocation);
             } while (songCursor.moveToNext());
         }
         // }
 
         songCursor.close();
-        Log.d(TAG, "getMusic ened");
+
 
     }
 
@@ -173,7 +166,6 @@ public class PlayMusic extends AppCompatActivity {
      * takes the song list and puts a on click listener for each song then adds it to the list view
      */
     private void gatherMusic(){
-          final String[] idResource2 = new String[1];
          final Context context = this;
           Log.i(TAG, "context: " + context);
         listView = findViewById(R.id.songList);
@@ -181,7 +173,6 @@ public class PlayMusic extends AppCompatActivity {
         getMusic();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, songList);
         //if(adapter != null && listView != null) {
-            Log.i(TAG, "Adaptor not null adding something to listview");
 
           runOnUiThread(new Runnable() {
               @Override
@@ -192,7 +183,7 @@ public class PlayMusic extends AppCompatActivity {
                   listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                       @Override
                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                          Context context1 = getApplicationContext();
+                        //  Context context1 = getApplicationContext();
                           String idResource = songList.get(position);
                           int pos =  idResource.indexOf("/");
 
