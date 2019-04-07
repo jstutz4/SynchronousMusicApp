@@ -55,13 +55,14 @@ public class PlayMusic extends AppCompatActivity {
     private SharedPreferences pref;
     private TryAudioStream audio;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         int port = sharedPref.getInt("Port", 0);
-        server = new Server(this, port);
+        server = new Server(port);
         socket = server.getSocket();
 
        Thread music = new Thread(new Runnable() {
@@ -226,6 +227,12 @@ public class PlayMusic extends AppCompatActivity {
 
       }
 
+    /**
+     * When a song is selected this function
+     * will write to the server socket and
+     * to the other clients a string.
+     * @param idResource The string to be sent
+     */
       public void sendSong(String idResource) {
 
           try {

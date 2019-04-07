@@ -4,25 +4,27 @@ import android.app.Activity;
 import android.util.Log;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.Enumeration;
 
+/**
+ * Sets up server socket and opens it in the background
+ * and remains open in the background for
+ * other sockets to connect to.
+ */
 public class Server {
     private Activity activity;
-    private InetAddress inetAddress;
     private ServerSocket serverSocket;
     private Socket socket1;
     private String  TAG = "Server";
     private String message = "";
-    private int backlog = 5;
     private int port;
 
-    public Server(Activity activity, int port) {
-        this.activity = activity;
+    /**
+     * Constructor that initiates the server.
+     * @param port Port from NSD for consistency
+     */
+    public Server(int port) {
         this.port = port;
 
         Log.d(TAG, "Server constructed");
@@ -30,21 +32,11 @@ public class Server {
         socketServerThread.start();
     }
 
-
-    public void onDestroy() {
-        if (serverSocket != null) {
-            try {
-                serverSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public int getPort() {
-        return port;
-    }
-
+    /**
+     * Thread that will run the socket server and open
+     * it in the background so that other sockets can
+     * connect to it.
+     */
     private class SocketServerThread extends Thread {
 
         int count = 0;
@@ -84,31 +76,4 @@ public class Server {
         return socket1;
     }
 
-    public String getIpAddress() {
-        String ip = "";
-        try {
-            Enumeration<NetworkInterface> enumNetworkInterfaces = NetworkInterface
-                    .getNetworkInterfaces();
-            while (enumNetworkInterfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = enumNetworkInterfaces
-                        .nextElement();
-                Enumeration<InetAddress> enumInetAddress = networkInterface
-                        .getInetAddresses();
-                while (enumInetAddress.hasMoreElements()) {
-                    InetAddress inetAddress = enumInetAddress
-                            .nextElement();
-
-                    if (inetAddress.isSiteLocalAddress()) {
-                        ip += "Server running at : "
-                                + inetAddress.getHostAddress();
-                    }
-                }
-            }
-
-        } catch (SocketException e) {
-            e.printStackTrace();
-            ip += "Something Wrong! " + e.toString() + "\n";
-        }
-        return ip;
-    }
 }
