@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +30,9 @@ import android.widget.ListView;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.net.URI;
 import java.util.ArrayList;
 
@@ -41,6 +45,9 @@ public class PlayMusic extends AppCompatActivity {
     String play = "play";
     String pause = "pause";
 
+    private Server server;
+    private Socket socket;
+    private OutputStream outputStream;
     private ArrayList<String> songList;
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -52,6 +59,11 @@ public class PlayMusic extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int port = sharedPref.getInt("Port", 0);
+        server = new Server(this, port);
+        socket = server.getSocket();
+
        Thread music = new Thread(new Runnable() {
            @Override
            public void run() {
@@ -197,6 +209,7 @@ public class PlayMusic extends AppCompatActivity {
                           int pos =  idResource.indexOf("/");
 
                           idResource = idResource.substring(pos);
+                          sendSong(idResource);
 //                try {
                           playMusic(idResource);
 //                } catch (IOException e) {
@@ -211,6 +224,18 @@ public class PlayMusic extends AppCompatActivity {
 
 
 
+      }
+
+      public void sendSong(String idResource) {
+
+          try {
+              outputStream = socket.getOutputStream();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+          PrintStream printStream = new PrintStream(outputStream);
+          printStream.print(idResource);
+          printStream.close();
       }
 
     private void playMusic(String idResource) {

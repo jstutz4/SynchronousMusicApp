@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.util.Log;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 public class Server {
     private Activity activity;
     private InetAddress inetAddress;
     private ServerSocket serverSocket;
+    private Socket socket1;
     private String  TAG = "Server";
     private String message = "";
     private int backlog = 5;
@@ -26,11 +24,7 @@ public class Server {
     public Server(Activity activity, int port) {
         this.activity = activity;
         this.port = port;
-        try {
-            inetAddress = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+
         Log.d(TAG, "Server constructed");
         Thread socketServerThread = new Thread(new SocketServerThread());
         socketServerThread.start();
@@ -77,9 +71,7 @@ public class Server {
                         }
                     });
 
-                    SocketServerReplyThread socketServerReplyThread =
-                            new SocketServerReplyThread(socket, count);
-                    socketServerReplyThread.run();
+                    socket1 = socket;
 
                 }
             } catch (IOException e) {
@@ -88,51 +80,8 @@ public class Server {
         }
     }
 
-    private class SocketServerReplyThread extends Thread {
-
-        private Socket hostThreadSocket;
-        int cnt;
-
-        SocketServerReplyThread(Socket socket, int c) {
-            hostThreadSocket = socket;
-            cnt = c;
-        }
-
-        @Override
-        public void run() {
-            OutputStream outputStream;
-            String msgReply = "Hello from Server, you are #" + cnt;
-
-            try {
-                outputStream = hostThreadSocket.getOutputStream();
-                PrintStream printStream = new PrintStream(outputStream);
-                printStream.print(msgReply);
-                printStream.close();
-
-                message += "replayed: " + msgReply + "\n";
-
-                activity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Log.i(TAG, message);
-                    }
-                });
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.e(TAG, e.toString() + "SocketReply");
-            }
-
-            activity.runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    Log.i(TAG, message);
-                }
-            });
-        }
-
+    public Socket getSocket() {
+        return socket1;
     }
 
     public String getIpAddress() {

@@ -3,9 +3,11 @@ package com.example.synchronousmusicapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -125,12 +127,10 @@ public class Hosting extends AppCompatActivity {
                 //tryAudioStream = new TryAudioStream(LocalPort);
                 //tryAudioStream.transmit();
                 Log.i(TAG, "register listener initialized");
-                Server server = new Server(activity, LocalPort);
-                int tport = server.getPort();
-                Log.i(TAG, Integer.toString(tport));
-
-                String ip = server.getIpAddress();
-                Log.i(TAG, ip);
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("Port", LocalPort);
+                editor.commit();
 
             }
 
