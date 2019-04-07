@@ -78,10 +78,13 @@ public class JoinGroup extends AppCompatActivity {
     }
 
     public void sendIp(View view) {
-        NsdServiceInfo info = serviceDiscovery.getNsdServiceInfo();
-        info.getPort();
-        info.getHost();
-        Log.i(TAG,"AMAZING :: " + info.getPort() +" ** " + info.getHost());
+//        NsdServiceInfo info = serviceDiscovery.getNsdServiceInfo();
+//        info.getPort();
+//        info.getHost();
+//        Log.i(TAG,"AMAZING :: " + info.getPort() +" ** " + info.getHost());
+//        SocketSend sendHost = new SocketSend();
+//        Log.i(TAG, "trying sockets to send 222");
+//        sendHost.sendToHost(info.getHost(), info.getPort());
 
     }
 }
