@@ -112,7 +112,7 @@ public class PlayMusic extends AppCompatActivity {
    // }
 
     /**
-     * retrieves all audio files from the device and puts them in a list
+     * Manages the playback of the music and creates a list
      */
     private void getMusic() {
 

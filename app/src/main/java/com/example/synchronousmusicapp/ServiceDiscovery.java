@@ -16,11 +16,8 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static android.support.v4.content.ContextCompat.startActivity;
-
 /**
- * Searches for the services that match our app and saves the host ip and port number in serviceinfo
- * When the service is found.
+ * This is the class that listens for and then identifies the Network Service Discovery.
  */
 class ServiceDiscovery {
     private Context context;

@@ -18,6 +18,9 @@ import static android.media.AudioAttributes.CONTENT_TYPE_MUSIC;
 import static android.media.AudioAttributes.FLAG_AUDIBILITY_ENFORCED;
 import static android.media.AudioAttributes.USAGE_MEDIA;
 
+/**
+ * This class tries to stream the audio between connected devices.
+ */
 public class TryAudioStream {
 
     private AudioStream audioStream;

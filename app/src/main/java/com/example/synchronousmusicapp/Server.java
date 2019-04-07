@@ -14,6 +14,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+/**
+ * This is the class for the hosting device.
+ */
 public class Server {
     private Activity activity;
     private InetAddress inetAddress;
@@ -135,6 +138,9 @@ public class Server {
 
     }
 
+    /**
+     * Identifies the Ip Address to be routed through.
+     */
     public String getIpAddress() {
         String ip = "";
         try {

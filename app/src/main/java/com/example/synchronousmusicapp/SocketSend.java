@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 /**
- * takes the host ip and post number and opens up a socket connection
+ * This class proposes a potential socket location to the registered host.
  */
 public class SocketSend extends Socket {
     private static Socket socket;
