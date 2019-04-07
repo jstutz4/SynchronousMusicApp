@@ -137,6 +137,9 @@ public class PlayMusic extends AppCompatActivity {
         }
    // }
 
+    /**
+     * Manages the playback of the music and creates a list
+     */
     private void getMusic() {
         Log.i(TAG, "getmusic started");
         ContentResolver contentResolver = getContentResolver();
@@ -245,6 +248,9 @@ public class PlayMusic extends AppCompatActivity {
           printStream.close();
       }
 
+    /**
+     * Begins music
+     */
     private void playMusic(String idResource) {
 
         Log.d(TAG, "media player locating song");

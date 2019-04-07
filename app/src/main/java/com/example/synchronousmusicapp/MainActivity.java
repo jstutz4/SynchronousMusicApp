@@ -5,6 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * The interface with which the user interacts with.
+ * Upon pressing the different buttons their respective
+ * functions are called and executed.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
