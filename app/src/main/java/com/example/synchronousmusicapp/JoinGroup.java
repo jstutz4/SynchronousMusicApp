@@ -1,21 +1,10 @@
 package com.example.synchronousmusicapp;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.nsd.NsdManager;
-import android.net.nsd.NsdServiceInfo;
-import android.net.wifi.p2p.WifiP2pManager;
-import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
 
 /**
  * Creates a listener and searches for other devices on the network with the same Synchronous music app.
@@ -73,9 +62,6 @@ public class JoinGroup extends AppCompatActivity {
         serviceDiscovery = null;
     }
 
-    public void playMusic(View view) {
-
-    }
 
     public void sendIp(View view) {
 //        NsdServiceInfo info = serviceDiscovery.getNsdServiceInfo();

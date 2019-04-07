@@ -6,30 +6,22 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AndroidException;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ToggleButton;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 
 /**
@@ -92,9 +84,9 @@ public class PlayMusic extends AppCompatActivity {
 
     }
 
-    public Boolean musicState(){
-        return false;
-    }
+//    public Boolean musicState(){
+//        return false;
+//    }
 
     /**
      * Toggles play and pause button and calls the appropriate method.
@@ -124,6 +116,9 @@ public class PlayMusic extends AppCompatActivity {
         }
    // }
 
+    /**
+     * retrieves all audio files from the device and puts them in the list view
+     */
     private void getMusic() {
         Log.i(TAG, "getmusic started");
         ContentResolver contentResolver = getContentResolver();
@@ -153,6 +148,9 @@ public class PlayMusic extends AppCompatActivity {
 
     }
 
+    /**
+     * if permission to browser internal storage is not granted then it will ask the user for permission
+     */
     private void runPermission() {
         if(ContextCompat.checkSelfPermission(PlayMusic.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED){
@@ -167,12 +165,14 @@ public class PlayMusic extends AppCompatActivity {
         }
         else{
             Log.d(TAG, "permissions all good");
-            dostuff();
+            gatherMusic();
         }
     }
 
-
-      private void dostuff(){
+    /**
+     * takes the song list and puts a on click listener for each song then adds it to the list view
+     */
+    private void gatherMusic(){
           final String[] idResource2 = new String[1];
          final Context context = this;
           Log.i(TAG, "context: " + context);
@@ -213,6 +213,10 @@ public class PlayMusic extends AppCompatActivity {
 
       }
 
+    /**
+     * loads song into the media player
+     * @param idResource   song location to play it
+     */
     private void playMusic(String idResource) {
 
         Log.d(TAG, "media player locating song");
@@ -249,7 +253,7 @@ public class PlayMusic extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(PlayMusic.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                         Log.d(TAG,"Permission granted!");
-                        dostuff();
+                        gatherMusic();
                     }
                     else{
                         Log.d(TAG, "NO permission granted");
