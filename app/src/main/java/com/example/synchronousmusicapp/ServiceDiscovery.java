@@ -13,6 +13,9 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * This is the class that listens for and then identifies the Network Service Discovery.
+ */
 class ServiceDiscovery {
     private Context context;
     private NsdManager nsdManager;

@@ -10,6 +10,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class creates and manages the medias browser.
+ */
 public class YesMediaBrowser extends MediaBrowserService {
 
     private MediaSession mediaSession;

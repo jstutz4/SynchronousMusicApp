@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+/**
+ * This class proposes a potential socket location to the registered host.
+ */
 public class SocketSend extends Socket {
     private static Socket socket;
     private static final String TAG = "SyncMusic socket";
