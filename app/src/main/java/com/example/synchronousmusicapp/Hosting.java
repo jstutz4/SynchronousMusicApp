@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 
 /**
@@ -125,6 +126,11 @@ public class Hosting extends AppCompatActivity {
                 //tryAudioStream.transmit();
                 Log.i(TAG, "register listener initialized");
                 Server server = new Server(activity, LocalPort);
+                int tport = server.getPort();
+                Log.i(TAG, Integer.toString(tport));
+
+                String ip = server.getIpAddress();
+                Log.i(TAG, ip);
 
             }
 

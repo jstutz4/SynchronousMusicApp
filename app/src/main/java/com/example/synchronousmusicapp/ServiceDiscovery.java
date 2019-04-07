@@ -56,7 +56,7 @@ class ServiceDiscovery {
                 Log.i(TAG, "Service discovery successs " + serviceInfo);
                 String serviceType = serviceInfo.getServiceType();
                 Log.i(TAG, "Service discovery success: " + serviceInfo.getServiceName());
-                boolean isOurService = serviceType.equals(SERVICE_Type);
+                boolean isOurService = (serviceType.equals(SERVICE_Type) || (serviceType.equals(SERVICE_Type_DOT)));
                 if(!isOurService){
                     Log.d(TAG, "Unknown service type: " + serviceInfo.getServiceType());
                 }

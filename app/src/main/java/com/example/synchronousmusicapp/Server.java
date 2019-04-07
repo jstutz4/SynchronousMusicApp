@@ -59,7 +59,7 @@ public class Server {
         public void run() {
             try {
                 // create ServerSocket using specified port
-                serverSocket = new ServerSocket(port, backlog, inetAddress);
+                serverSocket = new ServerSocket(port);
                 Log.d(TAG, "Begin wait for clients");
                 while (true) {
                     // block the call until connection is created and return
