@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -124,6 +125,8 @@ class ServiceDiscovery {
                     Log.d(TAG, "Same IP");
                 }
                 NsdServiceInfo = serviceInfo;
+                Toast.makeText(context, "Found: " + serviceInfo.getHost().toString() + Integer.toString(serviceInfo.getPort()),
+                        Toast.LENGTH_LONG).show();
                 //String test = serviceInfo.getHost().getHostAddress();
                 // add sockets idea
 
@@ -154,7 +157,7 @@ class ServiceDiscovery {
                     String sendMessage = clientIp + "\n";
                     bufferedWriter.write(sendMessage);
                     bufferedWriter.flush();
-                    System.out.println("Message sent to the server : " + sendMessage);
+                    Log.i("Synch", "Message sent to the server : " + sendMessage);
 
                     //Get the return message from the server
                     InputStream is = sendHost.getInputStream();
