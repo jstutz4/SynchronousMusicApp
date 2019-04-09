@@ -132,9 +132,11 @@ class ServiceDiscovery {
 
                 String host = serviceInfo.getHost().toString();
                 host = host.substring(1);
+                Log.d("Synch", "host ip: " + host);
                 Log.i(TAG, "trying sockets to send " + host);
                 try {
                     InetAddress address = InetAddress.getByName(host);
+
                     sendHost.sendToHost(address, serviceInfo.getPort());
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
@@ -159,7 +161,7 @@ class ServiceDiscovery {
                     InputStreamReader isr = new InputStreamReader(is);
                     BufferedReader br = new BufferedReader(isr);
                     String message = br.readLine();
-                    System.out.println("Message received from the server : " + message);
+                    Log.i("Synch", message);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
