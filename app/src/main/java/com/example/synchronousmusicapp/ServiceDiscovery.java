@@ -1,5 +1,6 @@
 package com.example.synchronousmusicapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.nsd.NsdManager;
@@ -22,6 +23,7 @@ import java.net.UnknownHostException;
  */
 class ServiceDiscovery {
     private Context context;
+    private Activity activity;
     private NsdManager nsdManager;
     private NsdManager.ResolveListener resolveListener;
     private NsdManager.DiscoveryListener discoveryListener;
@@ -31,8 +33,9 @@ class ServiceDiscovery {
     private static final String SERVICE_Type = "_http._tcp";
     private static final String SERVICE_Type_DOT = "_http._tcp" + ".";
 
-    ServiceDiscovery(Context context){
+    ServiceDiscovery(Context context, Activity activity){
         this.context = context;
+        this.activity = activity;
         nsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
     }
 

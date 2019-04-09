@@ -128,7 +128,7 @@ public class Hosting extends AppCompatActivity {
                 //tryAudioStream = new TryAudioStream(LocalPort);
                 //tryAudioStream.transmit();
                 Log.i(TAG, "register listener initialized");
-                Toast.makeText(context, "Successfully Registered Service",
+                Toast.makeText(activity, "Successfully Registered Service",
                         Toast.LENGTH_LONG).show();
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = sharedPref.edit();

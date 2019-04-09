@@ -26,7 +26,7 @@ public class JoinGroup extends AppCompatActivity {
     @Override
     protected void onStart() {
         Log.i(TAG, "Started onStart");
-        serviceDiscovery = new ServiceDiscovery(this);
+        serviceDiscovery = new ServiceDiscovery(this, this);
        // serviceDiscovery.initializeNsd();
 
         serviceDiscovery.discoverServices();
