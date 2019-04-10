@@ -231,14 +231,14 @@ public class PlayMusic extends AppCompatActivity {
      */
       public void sendSong(String idResource) {
 
-          try {
-              outputStream = socket.getOutputStream();
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-          PrintStream printStream = new PrintStream(outputStream);
-          printStream.print(idResource);
-          printStream.close();
+//          try {
+//              outputStream = socket.getOutputStream();
+//          } catch (IOException e) {
+//              e.printStackTrace();
+//          }
+//          PrintStream printStream = new PrintStream(outputStream);
+//          printStream.print(idResource);
+//          printStream.close();
       }
 
     /**
